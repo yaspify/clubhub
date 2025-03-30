@@ -1,15 +1,19 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import { buttonVariants } from "@/components/ui/button";
 import { clubs, Club } from "@/lib/data";
 import SearchResults from "@/components/search-results";
 
-export default function SearchBar() {
-  const [searchQuery, setSearchQuery] = useState("");
+export default function SearchBar({ initialQuery = "" }: { initialQuery?: string }) {
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchResults, setSearchResults] = useState<Club[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Update search results when query changes
   useEffect(() => {
@@ -18,7 +22,7 @@ export default function SearchBar() {
         .filter(
           (club) =>
             club.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              club.description.toLowerCase().includes(searchQuery.toLowerCase())
+            club.description.toLowerCase().includes(searchQuery.toLowerCase())
         )
         .slice(0, 5); // Limit to 5 results
 
@@ -50,8 +54,15 @@ export default function SearchBar() {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // Remove focus to dismiss keyboard on mobile
+      // Navigate to search page with query
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       e.currentTarget.blur();
+    }
+  };
+
+  const handleSearchClick = (e: React.MouseEvent) => {
+    if (!searchQuery.trim()) {
+      e.preventDefault();
     }
   };
 
@@ -59,13 +70,19 @@ export default function SearchBar() {
     <div className="relative w-full" ref={searchRef}>
       <div className="flex items-center space-x-2 mb-4 w-full">
         <div className="relative flex-grow">
-          <Input 
-            type="text" 
-            className="px-3 py-2 pr-10" 
-            placeholder="Search..." 
+          <Input
+            type="text"
+            className="px-3 py-2 pr-10"
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
+            onBlur={() => {
+              // Add slight delay to allow click events on results to register
+              setTimeout(() => {
+                setShowSearchResults(false);
+              }, 150);
+            }}
             onFocus={() => {
               if (searchQuery.trim().length > 0) {
                 setShowSearchResults(true);
@@ -83,8 +100,15 @@ export default function SearchBar() {
             </button>
           )}
         </div>
+        <Link 
+          href={searchQuery ? `/search?q=${encodeURIComponent(searchQuery)}` : "/search"} 
+          className={buttonVariants()}
+          onClick={handleSearchClick}
+        >
+          Search
+        </Link>
       </div>
-      
+
       {/* Instant Search Results */}
       {showSearchResults && searchResults.length > 0 && (
         <SearchResults results={searchResults} onResultClick={() => setShowSearchResults(false)} />
