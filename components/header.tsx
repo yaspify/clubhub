@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50 flex items-center justify-between p-4">
       <Link href="/" className="text-2xl font-bold">{headerContent}</Link>
-      <Link href="/" className={buttonVariants({ variant: "outline" })}>View all</Link>
+      <Link href="/" className={buttonVariants({ variant: "outline" })}>View all clubs</Link>
 
     </header>
   )
