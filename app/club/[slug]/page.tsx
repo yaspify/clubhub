@@ -1,6 +1,6 @@
 "use client"
 
-import { clubs, Club, clubCategories, ClubCategory } from "@/lib/data"
+import { clubs, Club } from "@/lib/data"
 import ClubCard from "@/components/club-card"
 import { useParams } from "next/navigation"
 import Image from "next/image"
@@ -20,7 +20,7 @@ export default function Page() {
       <div>
         <h1 className="text-2xl font-bold mt-4 mb-2">Oops! Club not found</h1>
         <p className="text-gray-700 mb-8">
-          We couldn't find the club you're looking for. Please try another one.
+          We couldn&apos;t find the club you&apos;re looking for. Please try another one.
         </p>
         <h2 className="text-xl font-bold mb-2">Other Clubs</h2>
         {recommendedClubs.map((club) => (

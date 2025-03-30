@@ -10,48 +10,6 @@ export interface Club {
     categories?: string[];
 }
 
-export interface ClubCategory {
-    name: string;
-    color: string;
-}
-
-export const clubCategories = [
-    {
-        name: "Outdoor",
-        color: "bg-green-500",
-    }
-    ,
-    {
-        name: "Literature",
-        color: "bg-blue-500",
-    },
-    {
-        name: "Technology",
-        color: "bg-purple-500",
-    },
-    {
-        name: "Health & Fitness",
-        color: "bg-red-500",
-    },
-    {
-        name: "Arts & Crafts",
-        color: "bg-yellow-500",
-    },
-    {
-        name: "Music & Entertainment",
-        color: "bg-pink-500",
-    },
-    {
-        name: "Gaming",
-        color: "bg-orange-500",
-    },
-    {
-        name: "Photography",
-        color: "bg-teal-500",
-    }
-]
-
-
 export const clubs: Club[] = [
     {
         slug: "adventure-club",

@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { clubs } from "@/lib/data"
 import { getClubBySlug } from "@/lib/data"
 import { buttonVariants } from "@/components/ui/button"
 
